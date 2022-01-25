@@ -8,10 +8,10 @@ jobs:
         steps:
             - uses: "actions/checkout@v2"
             - name: "Install Dependencies"
-              run: "brew install qt@5"
+              run: "brew install qt@5 qt"
             - name: "Build Project"
               run: |
-                export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig/"
+                export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig"
                 swift build
     TestOnUbuntu-20_04-x86_64:
         runs-on: "ubuntu-latest"
