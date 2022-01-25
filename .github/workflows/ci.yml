@@ -46,7 +46,9 @@ jobs:
                   copy "%SDKROOT%\usr\share\visualc.modulemap" "%VCToolsInstallDir%\include\module.modulemap"
                   copy "%SDKROOT%\usr\share\visualc.apinotes" "%VCToolsInstallDir%\include\visualc.apinotes"
                   copy "%SDKROOT%\usr\share\winsdk.modulemap" "%UniversalCRTSdkDir%\Include\%UCRTVersion%\um\module.modulemap"
-            - name: "Install QT"
-              run: "choco install qt5-default"
+            - name: "Install Dependencies"
+              run: "choco install qt5-default pkgconfiglite -y"
             - name: "Build Project"
-              run: "swift build"
+              run: |
+                $Env:PKG_CONFIG_PATH = "C:\Qt\5.15.2\mingw81_64\lib\pkgconfig"
+                swift build
