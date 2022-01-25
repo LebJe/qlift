@@ -10,7 +10,9 @@ jobs:
             - name: "Install Dependencies"
               run: "brew install qt@5"
             - name: "Build Project"
-              run: "swift build"
+              run: |
+                export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig/"
+                swift build
     TestOnUbuntu-20_04-x86_64:
         runs-on: "ubuntu-latest"
         steps:
