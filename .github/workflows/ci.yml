@@ -51,4 +51,5 @@ jobs:
             - name: "Build Project"
               run: |
                 $Env:PKG_CONFIG_PATH = "C:\Qt\5.15.2\mingw81_64\lib\pkgconfig"
+                $Env:Path += ";" + $Env:ChocolateyInstall + "\bin"
                 swift build
