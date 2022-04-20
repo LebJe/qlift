@@ -31,15 +31,15 @@ open class QAction: QObject {
         set { QAction_setText(self.ptr, newValue) }
     }
 
-    open func connectTriggered(receiver: QObject? = nil, to slot: @escaping ((Bool) -> Void)) {
-        let object: QObject = receiver ?? self
-
-        self.triggeredCallback = slot
+    open func connectTriggered<T: AnyObject, R: Any>(receiver: QObject? = nil, target: T, to slot: @escaping Slot<T, Bool, R>) {
+        self.triggeredCallback = { [weak target] in
+            if let target = target { _ = slot(target)($0) }
+        }
+        
         let rawSelf = Unmanaged.passUnretained(self).toOpaque()
-        QAction_triggered_connect(self.ptr, object.ptr, rawSelf) { raw, checked in
+        QAction_triggered_connect(self.ptr, (receiver ?? self).ptr, rawSelf) { raw, checked in
             let _self = Unmanaged<QAction>.fromOpaque(raw).takeUnretainedValue()
             _self.triggeredCallback?(checked)
         }
     }
 }
-
