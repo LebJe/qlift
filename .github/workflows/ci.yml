@@ -17,13 +17,15 @@ jobs:
         runs-on: "ubuntu-latest"
         steps:
             - uses: "actions/checkout@v2"
-            - name: "Install Dependencies"
-              run: |
-                sudo apt update
-                sudo apt install -yq build-essential libqt5gui5 libqt5quick5 qtdeclarative5-dev libqt5quickwidgets5 qtquickcontrols2-5-dev qtbase5-dev qt5-default
+            - name: "Install Qt"
+              uses: "jurplel/install-qt-action@v2"
+                #- name: "Install Dependencies"
+                #run: |
+                #sudo apt update
+                #sudo apt install -yq build-essential libqt5gui5 libqt5quick5 qtdeclarative5-dev libqt5quickwidgets5 qtquickcontrols2-5-dev qtbase5-dev qt5-default
             - name: "Build Project"
               run: |
-                export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/"
+                #export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/"
                 swift build
     TestOnWindows10-x86_64:
         runs-on: "windows-latest"
